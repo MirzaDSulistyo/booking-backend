@@ -14,4 +14,15 @@ $ source venv/bin/activate
 
 (venv) pip install pip install psycopg2-binary
 
+(venv) pip install pip install flask_script flask_migrate
+
 (venv) FLASK_APP=app.py FLASK_DEBUG=1 flask run
+
+Now we can start migrating database. First run,
+python manage.py db init
+
+This will create a folder named migrations in our project folder. To migrate using these created files, run
+python manage.py db migrate
+
+Now apply the migrations to the database using
+python manage.py db upgrade

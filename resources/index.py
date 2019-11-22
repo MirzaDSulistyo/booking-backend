@@ -6,4 +6,4 @@ from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_r
 
 class Index(Resource):
     def get(self):
-        return "Hello world"
+        return "Hello world!!"

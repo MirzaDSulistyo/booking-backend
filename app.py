@@ -31,14 +31,24 @@ jwt = JWTManager(app)
 app.config['JWT_BLACKLIST_ENABLED'] = True
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
 
-# @jwt.token_in_blacklist_loader
-# def check_if_token_in_blacklist(decrypted_token):
-#     jti = decrypted_token['jti']
-#     return models.RevokedToken.is_jti_blacklisted(jti)
+@jwt.token_in_blacklist_loader
+def check_if_token_in_blacklist(decrypted_token):
+    jti = decrypted_token['jti']
+    return UserModel.RevokedToken.is_jti_blacklisted(jti)
 
 from resources import index
+from resources import users
+from models import user as UserModel
 
 api.add_resource(index.Index, '/')
+
+api.add_resource(users.UserRegistration, '/registration')
+api.add_resource(users.UserLogin, '/login')
+api.add_resource(users.UserLogoutAccess, '/logout/access')
+api.add_resource(users.UserLogoutRefresh, '/logout/refresh')
+api.add_resource(users.TokenRefresh, '/token/refresh')
+api.add_resource(users.AllUsers, '/users')
+api.add_resource(users.SecretResource, '/secret')
 
 if __name__ == "__main__":
     app.run()
